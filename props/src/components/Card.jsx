@@ -1,7 +1,7 @@
 import React from 'react'
 import pp from '../assets/pexels.jpg'
 
-const Card = () => {
+const Card = (props) => {
   return (
     <div className="w-80 bg-white rounded-2xl shadow-xl overflow-hidden mx-auto border-4 border-black">
       
@@ -22,9 +22,9 @@ const Card = () => {
 
       {/* Bottom white section */}
       <div className="text-center px-4 pb-8 pt-4">
-        <h1 className="text-2xl font-serif font-bold text-gray-900">Tom Holland</h1>
-        <h2 className="text-gray-700 mt-1">Course: MERN</h2>
-        <h2 className="text-gray-700 mt-3">ID No.: 1234</h2>
+        <h1 className="text-2xl font-serif font-bold text-gray-900">{props.name}</h1>
+        <h2 className="text-gray-700 mt-1">Course: {props.course}</h2>
+        <h2 className="text-gray-700 mt-3">ID No.: {props.idno}</h2>
 
         {/* Barcode placeholder */}
         <div className="mt-6 flex justify-center">
