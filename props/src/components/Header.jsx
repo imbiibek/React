@@ -11,8 +11,27 @@ const Header = () => {
 
             <div>
                 <ul className='flex gap-8 text-gray-700 font-medium'>
-                    <li className='cursor-pointer hover:text-blue-600'><NavLink to="/">Home</NavLink></li>
-                    <li className='cursor-pointer hover:text-blue-600'><NavLink to="/about">About</NavLink></li>
+                    <li className='cursor-pointer'>
+                        <NavLink 
+                            to="/" 
+                            end
+                            className={({ isActive }) => 
+                                isActive ? 'text-blue-600' : 'hover:text-blue-600'
+                            }
+                        >
+                            Home
+                        </NavLink>
+                    </li>
+                    <li className='cursor-pointer'>
+                        <NavLink 
+                            to="/about"
+                            className={({ isActive }) => 
+                                isActive ? 'text-blue-600' : 'hover:text-blue-600'
+                            }
+                        >
+                            About Us 
+                        </NavLink>
+                    </li>
                     <li className='cursor-pointer hover:text-blue-600'>Blog</li>
                     <li className='cursor-pointer hover:text-blue-600'>Contact</li>
                 </ul>
