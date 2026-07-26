@@ -16,12 +16,12 @@ const Mern = (props) => {
                         📅 2.5 Months
                     </h2>
                     <h2 className="flex items-center gap-1">
-                        👥 120+ Enrolled in course dfwefewfewffjhsdbhdsb
+                        👥 120+ Enrolled
                     </h2>
                 </div>
 
                 <div className="flex items-center justify-between pt-3">
-                    <h1 className="text-lg font-bold text-blue-600">NPR. 150000000000000/-</h1>
+                    <h1 className="text-lg font-bold text-blue-600">NPR. 15000/-</h1>
                     <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2 rounded-lg transition-colors">
                         Learn More
                     </button>
