@@ -3,6 +3,8 @@ import tclass from '../assets/letslearnclass.png'
 import cer from '../assets/certificate.webp'
 import Mern from '../components/Mern'
 import mern from '../assets/mern.png'
+import ai from '../assets/aipy.png'
+import web from '../assets/web.png'
 
 const Home = () => {
     return (
@@ -86,22 +88,28 @@ const Home = () => {
                 </p>
             </div>
 
-            {/* IT Courses */}
-            <Mern
+        {/* IT Courses */}
+<div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 md:px-16 py-12 max-w-7xl mx-auto">
 
-                image={mern}
+    <Mern
+        image={mern}
+        coursename="MERN Stack"
+        coursedetails="Master the MERN stack in Nepal — MongoDB, Express, React & Node with hands-on projects, real deployment, and certification. Classroom and online batches available."
+    />
 
-                coursename="MERN Stack"
+    <Mern
+        image={ai}
+        coursename="AI & Python"
+        coursedetails="Master AI & Python in Nepal with hands-on projects, real deployment, and certification. Classroom and online batches available."
+    />
 
-                coursedetails="Master the MERN stack in Nepal — MongoDB,
-            Express, React & Node with hands-on projects, real deployment,
-             and certification. Classroom and online batches available." 
-             
-             
-             
-              />
+    <Mern
+        image={web}
+        coursename="Web Development"
+        coursedetails="Master Web Development in Nepal with hands-on projects, real deployment, and certification. Classroom and online batches available."
+    />
 
-             
+</div>
 
 
 
