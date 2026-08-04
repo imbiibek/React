@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import Card from './components/Card'
-import { Route, Routes } from 'react-router-dom'
-import Meals from './components/Meals'
 
 const App = () => {
   const [meal, setMeal] = useState([])
