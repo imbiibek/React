@@ -1,29 +1,18 @@
 import { Link } from "react-router-dom"
 
 const CategoryCard = ({ category }) => {
-  const shortDescription =
-    category.strCategoryDescription.split(" ").slice(0, 15).join(" ") + "..."
-
   return (
-    <div className="bg-zinc-900 rounded-lg p-6 flex flex-col items-center text-center">
+    <Link to={`/category/${category.strCategory}`} className="text-center block">
       <img
         src={category.strCategoryThumb}
         alt={category.strCategory}
-        className="w-32 h-32 rounded-full object-cover mb-4"
+        className="w-full h-56 object-cover rounded-lg"
       />
 
-      <h2 className="text-xl font-bold text-white mb-2">
+      <p className="mt-2 text-orange-500 text-base font-medium">
         {category.strCategory}
-      </h2>
-
-      <p className="text-gray-400 text-sm mb-4">{shortDescription}</p>
-
-      <Link to={`/category/${category.strCategory}`}>
-        <button className="bg-white text-black font-semibold px-4 py-2 rounded-md hover:bg-gray-200 transition">
-          View Details
-        </button>
-      </Link>
-    </div>
+      </p>
+    </Link>
   )
 }
 

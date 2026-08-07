@@ -9,8 +9,56 @@ const CategoriesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const [randomMeals, setRandomMeals] = useState([]);
+  const [randomMeal, setRandomMeal] = useState(null);
   const [randomLoading, setRandomLoading] = useState(true);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
+  const handleSearchChange = async (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    const firstLetter = value.trim().charAt(0);
+
+    if (!firstLetter) {
+      setSearchResults([]);
+      setShowSearchResults(false);
+      return;
+    }
+
+    try {
+      setSearchLoading(true);
+      setShowSearchResults(true);
+
+      const response = await axios.get(
+        `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`
+      );
+
+      setSearchResults(response.data.meals || []);
+    } catch (err) {
+      console.error(err);
+      setSearchResults([]);
+    } finally {
+      setSearchLoading(false);
+    }
+  };
+
+  const fetchRandomMeal = async () => {
+    try {
+      setRandomLoading(true);
+      const response = await axios.get(
+        "https://www.themealdb.com/api/json/v1/1/random.php"
+      );
+      setRandomMeal(response.data.meals[0]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setRandomLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -26,30 +74,8 @@ const CategoriesPage = () => {
       }
     };
 
-    const fetchRandomMeals = async () => {
-      try {
-        const mealMap = new Map();
-
-        while (mealMap.size < 15) {
-          const response = await axios.get(
-            "https://www.themealdb.com/api/json/v2/1/randomselection.php"
-          );
-
-          response.data.meals.forEach((meal) => {
-            mealMap.set(meal.idMeal, meal);
-          });
-        }
-
-        setRandomMeals(Array.from(mealMap.values()).slice(0, 15));
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setRandomLoading(false);
-      }
-    };
-
     fetchCategories();
-    fetchRandomMeals();
+    fetchRandomMeal();
   }, []);
 
   if (loading) {
@@ -71,33 +97,77 @@ const CategoriesPage = () => {
         <img src={logo} alt="Logo" className="h-10" />
 
         <div className="flex items-center gap-4">
-          <Link
-            to="/"
-            className="px-4 py-2 rounded-md hover:bg-gray-800"
-          >
+          <Link to="/" className="px-4 py-2 rounded-md hover:bg-gray-800">
             Home
           </Link>
 
-          <Link
-            to="/api"
-            className="px-4 py-2 rounded-md hover:bg-gray-800"
-          >
+          <Link to="/api" className="px-4 py-2 rounded-md hover:bg-gray-800">
             API
           </Link>
 
-          <input
-            type="text"
-            placeholder="Search..."
-            className="px-4 py-2 rounded-md bg-gray-900 border border-gray-700"
-          />
+          <div className="relative">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onFocus={() => searchTerm && setShowSearchResults(true)}
+              onBlur={() => setTimeout(() => setShowSearchResults(false), 150)}
+              placeholder="Search..."
+              className="px-4 py-2 rounded-md bg-gray-900 border border-gray-700 w-64"
+            />
+
+            {showSearchResults && (
+              <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-zinc-900 border border-gray-700 rounded-md shadow-lg z-50">
+                {searchLoading ? (
+                  <p className="text-center text-sm text-gray-400 py-4">
+                    Searching...
+                  </p>
+                ) : searchResults.filter((meal) =>
+                    meal.strMeal
+                      .toLowerCase()
+                      .startsWith(searchTerm.toLowerCase())
+                  ).length === 0 ? (
+                  <p className="text-center text-sm text-gray-400 py-4">
+                    No meals found
+                  </p>
+                ) : (
+                  searchResults
+                    .filter((meal) =>
+                      meal.strMeal
+                        .toLowerCase()
+                        .startsWith(searchTerm.toLowerCase())
+                    )
+                    .map((meal) => (
+                      <Link
+                        key={meal.idMeal}
+                        to={`/meal/${meal.idMeal}`}
+                        className="flex items-center gap-3 px-3 py-2 hover:bg-zinc-800"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => {
+                          setShowSearchResults(false);
+                          setSearchTerm("");
+                        }}
+                      >
+                        <img
+                          src={meal.strMealThumb}
+                          alt={meal.strMeal}
+                          className="w-10 h-10 rounded object-cover"
+                        />
+                        <span className="text-sm text-gray-200">
+                          {meal.strMeal}
+                        </span>
+                      </Link>
+                    ))
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
       {/* Hero */}
       <section className="max-w-3xl mx-auto text-center py-16 px-6">
-        <h1 className="text-4xl font-bold mb-4">
-          Welcome to TheMealDB
-        </h1>
+        <h1 className="text-4xl font-bold mb-4">Welcome to TheMealDB</h1>
 
         <p className="text-gray-400 mb-8">
           Welcome to TheMealDB: An open, crowd-sourced database of recipes from
@@ -117,48 +187,72 @@ const CategoriesPage = () => {
 
       {/* Categories */}
       <section className="max-w-7xl mx-auto px-6 pb-12">
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Latest Meals
-        </h2>
+        <h2 className="text-3xl font-bold text-center mb-8">Latest Meals</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {categories.map((category) => (
-            <CategoryCard
-              key={category.idCategory}
-              category={category}
-            />
+            <CategoryCard key={category.idCategory} category={category} />
           ))}
         </div>
       </section>
 
-      {/* Random Meals */}
+      {/* Random Meal */}
       <section className="max-w-7xl mx-auto px-6 pb-16">
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Random Meals
-        </h2>
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <h2 className="text-3xl font-bold text-center">Random Meal</h2>
 
-        {randomLoading ? (
+          <button
+            onClick={fetchRandomMeal}
+            disabled={randomLoading}
+            className="px-4 py-2 bg-orange-500 rounded-md hover:bg-orange-600 disabled:opacity-50 text-sm font-semibold"
+          >
+            {randomLoading ? "Shuffling..." : "Shuffle"}
+          </button>
+        </div>
+
+        {randomLoading || !randomMeal ? (
           <h2 className="text-center text-xl">Loading...</h2>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {randomMeals.map((meal) => (
-              <div key={meal.idMeal} className="text-center">
-                <img
-                  src={meal.strMealThumb}
-                  alt={meal.strMeal}
-                  className="w-full h-72 object-cover rounded"
-                />
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            {/* Left: Image */}
+            <img
+              src={randomMeal.strMealThumb}
+              alt={randomMeal.strMeal}
+              className="w-full md:w-1/2 h-80 object-cover rounded-lg"
+            />
 
-                <p className="mt-3 text-orange-500 text-lg">
-                  {meal.strMeal}
-                </p>
-              </div>
-            ))}
+            {/* Right: Details */}
+            <div className="w-full md:w-1/2">
+              <h3 className="text-2xl font-bold text-orange-500 mb-2">
+                {randomMeal.strMeal}
+              </h3>
+
+              <p className="text-gray-400 text-sm mb-4">
+                {randomMeal.strCategory} • {randomMeal.strArea}
+              </p>
+
+              <p className="text-gray-300 text-sm mb-6 leading-relaxed line-clamp-6">
+                {randomMeal.strInstructions}
+              </p>
+
+              {randomMeal.strYoutube && (
+                <div className="aspect-video w-full">
+                  <iframe
+                    className="w-full h-full rounded-lg"
+                    src={`https://www.youtube.com/embed/${
+                      randomMeal.strYoutube.split("v=")[1]
+                    }`}
+                    title={randomMeal.strMeal}
+                    allowFullScreen
+                  />
+                </div>
+              )}
+            </div>
           </div>
         )}
       </section>
 
-        {/* Footer */}
+      {/* Footer */}
       <footer className="bg-[#0f0f0f] text-gray-300 px-6 py-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Left: Copyright */}
