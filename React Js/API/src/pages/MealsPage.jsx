@@ -33,7 +33,7 @@ const MealsPage = () => {
     <div className="bg-black min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
         <Link to="/" className="text-white underline mb-6 inline-block">
-          &larr; Back to Categories
+          -Back to Categories
         </Link>
 
         <h1 className="text-3xl font-bold text-white mb-6">{categoryName}</h1>
