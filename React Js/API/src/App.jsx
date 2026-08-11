@@ -3,6 +3,7 @@ import CategoriesPage from "./pages/CategoriesPage"
 import MealsPage from "./pages/MealsPage"
 import MealDetailPage from "./pages/MealDetailPage"
 import Navbar from "./components/Navbar"
+import Footer from "./components/Footer"
 
 const App = () => {
   return (
@@ -16,6 +17,8 @@ const App = () => {
       <Route path="/category/:categoryName" element={<MealsPage />} />
       <Route path="/meal/:mealId" element={<MealDetailPage />} />
     </Routes>
+
+    <Footer />
 
     </div>
   )
