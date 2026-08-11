@@ -93,77 +93,7 @@ const CategoriesPage = () => {
   return (
     <div className="bg-[#231f1a] min-h-screen text-white">
       {/* Navbar */}
-      <header className="flex items-center justify-between px-8 py-4 border-b border-gray-700">
-        <img src={logo} alt="Logo" className="h-10" />
 
-        <div className="flex items-center gap-4">
-          <Link to="/" className="px-4 py-2 rounded-md hover:bg-gray-800">
-            Home
-          </Link>
-
-          <Link to="/api" className="px-4 py-2 rounded-md hover:bg-gray-800">
-            API
-          </Link>
-
-          <div className="relative">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              onFocus={() => searchTerm && setShowSearchResults(true)}
-              onBlur={() => setTimeout(() => setShowSearchResults(false), 150)}
-              placeholder="Search..."
-              className="px-4 py-2 rounded-md bg-gray-900 border border-gray-700 w-64"
-            />
-
-            {showSearchResults && (
-              <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-zinc-900 border border-gray-700 rounded-md shadow-lg z-50">
-                {searchLoading ? (
-                  <p className="text-center text-sm text-gray-400 py-4">
-                    Searching...
-                  </p>
-                ) : searchResults.filter((meal) =>
-                    meal.strMeal
-                      .toLowerCase()
-                      .startsWith(searchTerm.toLowerCase())
-                  ).length === 0 ? (
-                  <p className="text-center text-sm text-gray-400 py-4">
-                    No meals found
-                  </p>
-                ) : (
-                  searchResults
-                    .filter((meal) =>
-                      meal.strMeal
-                        .toLowerCase()
-                        .startsWith(searchTerm.toLowerCase())
-                    )
-                    .map((meal) => (
-                      <Link
-                        key={meal.idMeal}
-                        to={`/meal/${meal.idMeal}`}
-                        className="flex items-center gap-3 px-3 py-2 hover:bg-zinc-800"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => {
-                          setShowSearchResults(false);
-                          setSearchTerm("");
-                        }}
-                      >
-                        <img
-                          src={meal.strMealThumb}
-                          alt={meal.strMeal}
-                          className="w-10 h-10 rounded object-cover"
-                        />
-                        <span className="text-sm text-gray-200">
-                          {meal.strMeal}
-                        </span>
-                      </Link>
-                    ))
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
 
       {/* Hero */}
       <section className="max-w-3xl mx-auto text-center py-16 px-6">
