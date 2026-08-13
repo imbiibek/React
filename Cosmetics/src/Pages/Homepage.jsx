@@ -5,15 +5,32 @@ import React, { useState, useEffect } from 'react'
 const Homepage = () => {
 
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const getData = async () => {
-    const response = await axios.get('https://dummyjson.com/products')
-    setData(response.data.products)
+    try {
+      const response = await axios.get('https://dummyjson.com/products')
+      setData(response.data.products)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+      setError('Failed to load products. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
     getData()
   }, [])
+
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>
+  }
+
+  if (error) {
+    return <div className="flex items-center justify-center h-screen text-red-500">{error}</div>
+  }
 
   return (
     <div className='flex flex-wrap gap-4 p-4'>

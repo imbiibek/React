@@ -1,5 +1,5 @@
 import React from 'react'
-import { Search, User, ShoppingBag, Menu } from 'lucide-react'
+import { Search, User, ShoppingBag } from 'lucide-react'
 
 const Navbar = () => {
   return (
