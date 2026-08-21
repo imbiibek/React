@@ -1,5 +1,6 @@
 import React from 'react'
 import { Search, User, ShoppingBag } from 'lucide-react'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -21,6 +22,14 @@ const Navbar = () => {
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B49A93]" />
         </div>
 
+
+        <div>
+
+          <NavLink to="/myform">Form</NavLink>
+
+        </div>
+
+
         {/* Icons */}
         <div className="hidden md:flex items-center gap-5 ml-auto text-[#3D2B3A]">
           <button aria-label="Account" className="hover:text-[#C9A063] transition">
@@ -31,7 +40,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        
+
       </div>
     </header>
   )
