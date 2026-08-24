@@ -3,7 +3,7 @@ h1 {
     margin: 5px;
 }
 
-button{
+button, input {
     padding: 10px 20px;
     margin: 5px;
 }
