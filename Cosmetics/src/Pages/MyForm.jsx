@@ -22,7 +22,7 @@ const MyForm = () => {
   // Redux
   const dispatch = useDispatch();
 
-  const posts = useSelector((state) => state.blog);
+  const posts = useSelector((state) => state.blog.posts);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -154,8 +154,8 @@ const MyForm = () => {
 
           {posts.map((post, index) => (
             <div key={index}>
-              <p>{post.name}</p>
-              <p>{post.email}</p>
+              <p>Name :- {post.name}</p>
+              <p>Email :- {post.email}</p>
             </div>
           ))}
         </div>
