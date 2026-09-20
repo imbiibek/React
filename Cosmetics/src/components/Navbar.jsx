@@ -5,14 +5,11 @@ import { NavLink } from 'react-router-dom'
 const Navbar = () => {
   return (
     <header className="w-full bg-[#FAF6F3] border-b border-[#E8D9D3]">
-      {/* Top row: logo, search, icons */}
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-6">
-        {/* Logo */}
         <a href="/" className="text-2xl tracking-wide font-serif text-[#3D2B3A] shrink-0">
           LuxeBoutique
         </a>
 
-        {/* Search bar */}
         <div className="hidden md:flex flex-1 max-w-md relative">
           <input
             type="text"
@@ -22,15 +19,25 @@ const Navbar = () => {
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B49A93]" />
         </div>
 
-
-        <div>
-
-          <NavLink to="/myform">Form</NavLink>
-
+        <div className="flex items-center gap-4">
+          <NavLink
+            to="/myform"
+            className={({ isActive }) =>
+              isActive ? "text-[#C9A063] font-medium" : "text-[#3D2B3A]"
+            }
+          >
+            Form
+          </NavLink>
+          <NavLink
+            to="/formData"
+            className={({ isActive }) =>
+              isActive ? "text-[#C9A063] font-medium" : "text-[#3D2B3A]"
+            }
+          >
+            Form Data
+          </NavLink>
         </div>
 
-
-        {/* Icons */}
         <div className="hidden md:flex items-center gap-5 ml-auto text-[#3D2B3A]">
           <button aria-label="Account" className="hover:text-[#C9A063] transition">
             <User className="w-5 h-5" />
@@ -39,8 +46,6 @@ const Navbar = () => {
             <ShoppingBag className="w-5 h-5" />
           </button>
         </div>
-
-
       </div>
     </header>
   )

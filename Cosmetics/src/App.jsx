@@ -7,6 +7,7 @@ import Form from './Pages/Form'
 import Formikform from './Pages/Formikform'
 import RegistrationForm from './Pages/RegistrationForm'
 import MyForm from './Pages/MyForm'
+import FormData from './Pages/FormData'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/formik" element={<Formikform />} />
         <Route path="/newformik" element={<RegistrationForm />} />
         <Route path="/myform" element={<MyForm />} />
+        <Route path="/formData" element={<FormData />} />
       </Routes>
 
     </div>
