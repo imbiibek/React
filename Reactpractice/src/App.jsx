@@ -1,29 +1,16 @@
 import React from 'react'
-import Footer from './components/Footer'
-import Header from './components/Header'
-import Note from './components/Note'
-import notes from './notes'
+import Form from './components/Form';
 
+
+var userIsRegistered = true;
 
 const App = () => {
   return (
-    <div>
-      <Header />
-
-      {notes.map(item =>
-        <Note
-          key={item.key}
-          title={item.title}
-          content={item.content}
-        />
-      )
-      }
-
-
-      <Footer />
-
-
+    
+    <div className="container">
+      <Form isRegistered={userIsRegistered} />
     </div>
+
   )
 }
 
