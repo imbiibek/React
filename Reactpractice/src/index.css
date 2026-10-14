@@ -1,2 +1,10 @@
 @import "tailwindcss";
 
+* {
+    background-color: green;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: aliceblue;
+}

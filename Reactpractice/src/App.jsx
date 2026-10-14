@@ -1,41 +1,37 @@
 import React, { useState } from "react";
 
 const App = () => {
-  const [name, setName] = useState("")
-  const [state, setState] = useState("Submit");
-  const [isMouseOver, setMouseOver] = useState(false);
-  const [heading, setHeading] = useState("")
+  const [fname, setfname] = useState();
+  const [lname, setlname] = useState();
 
-  function handleMouseOver() {
-    setMouseOver(true);
+  function changefname(event) {
+    const fnameInput = event.target.value;
+    setfname(fnameInput);
   }
 
-  function handleMouseOut() {
-    setMouseOver(false);
-  }
-
-  function handleChange(event) {
-   const textValue = event.target.value
-    console.log(textValue);
-setName(textValue)
-  }
-
-  function handleClick() {
-    setHeading(name)
+  function changelname(event) {
+    const lnameInput = event.target.value;
+    setlname(lnameInput);
   }
 
   return (
-    <div>
-      <h1> Hello {heading} </h1>
-      <input type="text" placeholder="Type your name" onChange={handleChange} ></input>
-      <button
-        style={{ backgroundColor: isMouseOver ? "blue" : "red" }}
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-        onClick={handleClick}
-      >
-        {state}
-      </button>
+    <div className="container">
+      <h1>Hello {fname} {lname}</h1>
+      <form>
+        <input
+          name="fname"
+          placeholder="First name"
+          value={fname}
+          onChange={changefname}
+        ></input>
+        <input
+          name="lname"
+          placeholder="Second name"
+          value={lname}
+          onChange={changelname}
+        ></input>
+        <button>Submit</button>
+      </form>
     </div>
   );
 };
