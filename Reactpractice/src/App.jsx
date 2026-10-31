@@ -30,7 +30,7 @@ const App = () => {
           value={lname}
           onChange={changelname}
         ></input>
-        <button>Submit</button>
+        <button>Submit Button</button>
       </form>
     </div>
   );
