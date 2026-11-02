@@ -1,10 +1,19 @@
 @import "tailwindcss";
 
 * {
-    background-color: green;
+    background-color: white;
     box-sizing: border-box;
 }
 
 button {
     background-color: aliceblue;
+}
+
+h1 {
+    color: Red;
+    font-size: 60px;
+}
+
+.input {
+    border-color: aqua;
 }

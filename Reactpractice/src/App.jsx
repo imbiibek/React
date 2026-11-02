@@ -1,37 +1,43 @@
-import React, { useState } from "react";
+import react, {useState, useEffect} from "react";
 
 const App = () => {
-  const [fname, setfname] = useState();
-  const [lname, setlname] = useState();
 
-  function changefname(event) {
-    const fnameInput = event.target.value;
-    setfname(fnameInput);
-  }
+const [users, setUsers] = useState([])
 
-  function changelname(event) {
-    const lnameInput = event.target.value;
-    setlname(lnameInput);
-  }
+useEffect( () => {
+
+  async function githubProfile() {
+
+  const response = await fetch("https://api.github.com/users");
+  const data = await response.json();
+
+  console.log("Hi");
+
+  setUsers(data);
+  
+}
+
+githubProfile();
+
+}, [])
+
+function handleChange(e) {
+  console.log(e.target.value);
+  
+}
+
+
+
 
   return (
-    <div className="container">
-      <h1>Hello {fname} {lname}</h1>
-      <form>
-        <input
-          name="fname"
-          placeholder="First name"
-          value={fname}
-          onChange={changefname}
-        ></input>
-        <input
-          name="lname"
-          placeholder="Second name"
-          value={lname}
-          onChange={changelname}
-        ></input>
-        <button>Submit Button</button>
-      </form>
+    <div>
+      <h1>Github Profiles</h1>
+      <input type="text" onChange={handleChange}></input>
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}} >
+      {users.map((item) => (
+        <img src={item.avatar_url} height={"100px"} width={"100px"} key={item.login}/>
+      ))}
+      </div>
     </div>
   );
 };
